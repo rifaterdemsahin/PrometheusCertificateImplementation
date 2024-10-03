@@ -4,7 +4,7 @@ Docker plugin install
 # Start
 docker-compose up -d
 
-# Certificates
+# Self Signed Certificates
 openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout prometheus.key -out prometheus.crt
 
 
