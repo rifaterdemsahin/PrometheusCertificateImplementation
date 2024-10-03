@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'mycluster'
+    replica: 'myreplica'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+tls_config:
+  cert_file: /etc/prometheus/Cert/prometheus.crt
+  key_file: /etc/prometheus/Cert/prometheus.key
