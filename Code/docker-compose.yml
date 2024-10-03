@@ -4,7 +4,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./Code/prometheus.yml:/etc/prometheus/Code/prometheus.yml
       - ./Cert/prometheus.crt:/etc/prometheus/Cert/prometheus.crt
       - ./Cert/prometheus.key:/etc/prometheus/Cert/prometheus.key
     ports:
@@ -21,8 +21,8 @@ services:
       - --grpc-address=0.0.0.0:10941
       - --http-address=0.0.0.0:10942
       - --log.level=debug
-      - --cert-file=/etc/thanos/thanos.crt
-      - --key-file=/etc/thanos/thanos.key
+      - --cert-file=/etc/thanos/Cert/thanos.crt
+      - --key-file=/etc/thanos/Cert/thanos.key
     volumes:
       - ./prometheus-data:/var/prometheus
       - ./Cert/thanos.crt:/etc/thanos/Cert/thanos.crt
