@@ -5,49 +5,10 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./Code/prometheus.yml:/etc/prometheus/Code/prometheus.yml
-      - ./Cert/prometheus.crt:/etc/prometheus/Cert/prometheus.crt
-      - ./Cert/prometheus.key:/etc/prometheus/Cert/prometheus.key
+      - ./Cert/prometheus.crt:/etc/prometheus/prometheus.crt
+      - ./Cert/prometheus.key:/etc/prometheus/prometheus.key
     ports:
       - "9090:9090"
-    networks:
-      - code_default
-
-  thanos-sidecar:
-    image: quay.io/thanos/thanos:v0.35.1
-    command:
-      - sidecar
-      - --tsdb.path=/var/prometheus
-      - --prometheus.url=https://prometheus:9090
-      - --grpc-address=0.0.0.0:10941
-      - --http-address=0.0.0.0:10942
-      - --log.level=debug
-      - --cert-file=/etc/thanos/Cert/thanos.crt
-      - --key-file=/etc/thanos/Cert/thanos.key
-    volumes:
-      - ./prometheus-data:/var/prometheus
-      - ./Cert/thanos.crt:/etc/thanos/Cert/thanos.crt
-      - ./Cert/thanos.key:/etc/thanos/Cert/thanos.key
-    depends_on:
-      - prometheus
-    ports:
-      - "10941:10941"
-      - "10942:10942"
-    networks:
-      - code_default
-
-  thanos-query:
-    image: quay.io/thanos/thanos:v0.35.1
-    command:
-      - query
-      - --http-address=0.0.0.0:9091
-      - --store=thanos-sidecar:10941
-      - --log.level=debug
-      - --cert-file=/etc/thanos/Cert/thanos.crt
-      - --key-file=/etc/thanos/Cert/thanos.key
-    depends_on:
-      - thanos-sidecar
-    ports:
-      - "9091:9091"
     networks:
       - code_default
 
